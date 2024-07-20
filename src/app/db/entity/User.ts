@@ -5,12 +5,17 @@ export class User {
   @PrimaryGeneratedColumn({
 		unsigned: true,
 	})
-	event_id?: number;
+	user_id?: number;
 
   @Column({
     length: 255,
   })
   user_name!: string;
+
+  @Column({
+    length: 50,
+  })
+  user_nickname!: string;
 
   @Column({
     length: 20,

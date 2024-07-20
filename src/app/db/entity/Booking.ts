@@ -7,10 +7,8 @@ export class Booking {
 	})
 	booking_id?: number;
 
-	@Column({
-		length: 255,
-	})
-	event_id!: string;
+	@Column()
+	event_id!: number;
 
 	@Column({
 		type: 'json'
