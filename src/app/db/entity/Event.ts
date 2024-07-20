@@ -67,6 +67,11 @@ export class Event {
 	contact!: string;
 
 	@Column({
+		unsigned: true
+	})
+	admin_id!: number;
+
+	@Column({
 		type: 'datetime',
 	})
 	createdAt?: Date;

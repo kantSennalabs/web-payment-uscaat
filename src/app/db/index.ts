@@ -1,7 +1,10 @@
 import { DataSource } from 'typeorm';
 import { Admin } from './entity/Admin';
 import { Event } from './entity/Event';
-import { Attendee } from './entity/Attendee';
+import { Booking } from './entity/Booking';
+import { Faculty } from './entity/Faculty';
+import { User } from './entity/User';
+import { Payment } from './entity/Payment';
 
 const db = new DataSource({
 	type: 'mysql',
@@ -12,7 +15,7 @@ const db = new DataSource({
 	database: process.env.DATABASE_NAME,
 	synchronize: true,
 	logging: false,
-	entities: [Admin, Event, Attendee],
+	entities: [Admin, Event, Booking, Faculty, User, Payment],
 });
 
 export async function checkConnection() {

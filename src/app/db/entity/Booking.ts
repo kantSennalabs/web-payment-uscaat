@@ -1,31 +1,21 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Attendee {
+export class Booking {
 	@PrimaryGeneratedColumn({
 		unsigned: true,
 	})
-	attendee_id?: number;
+	booking_id?: number;
 
 	@Column({
 		length: 255,
 	})
-	event_name!: string;
+	event_id!: string;
 
 	@Column({
-		length: 255,
+		type: 'json'
 	})
-	attendee_phone!: string;
-
-	@Column({
-    length: 255,
-	})
-	attendee_school!: string;
-
-	@Column({
-		type: 'smallint',
-	})
-	Attendee_gradyear!: number;
+	user_id!: number[];
 
 	@Column({
 		type: 'datetime',
