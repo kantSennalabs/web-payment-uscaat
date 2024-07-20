@@ -14,11 +14,11 @@ export async function POST(req: Request) {
 		const body: Admin = await req.json();
 		const foundAdmin: Admin | null = await adminRepository.findOneBy({ username: body.username });
 		if (!foundAdmin) {
-			return NextResponse.json('Wrong username or password.', { status: 404 });
+			return NextResponse.json('', { status: 404, statusText: 'Wrong username or password.' });
 		}
 		const checkPassword: boolean = await bcrypt.compare(body.password, foundAdmin.password);
 		if (!checkPassword) {
-			return NextResponse.json('Wrong username or password.', { status: 404 });
+			return NextResponse.json('', { status: 404, statusText: 'Wrong username or password.' });
 		}
 		const token = jwt.sign({ user_id: foundAdmin.user_id }, process.env.SECRET_KEY!);
 		response.cookies.set({
