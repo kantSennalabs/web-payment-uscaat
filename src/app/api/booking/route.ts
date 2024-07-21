@@ -66,3 +66,19 @@ export async function POST(req: NextResponse) {
 		await db.destroy();
 	}
 }
+
+export async function GET(req: NextResponse) {
+	try {
+		if (!db.isInitialized) {
+			await db.initialize();
+		}
+		const bookingRepository = db.getRepository(Booking);
+		const bookingList: Booking[] = await bookingRepository.find();
+		return NextResponse.json(bookingList);
+	} catch (error) {
+		console.error(error);
+		return NextResponse.json('Database Error', { status: 507 });
+	} finally {
+		await db.destroy();
+	}
+}
