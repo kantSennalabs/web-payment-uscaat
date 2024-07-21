@@ -5,6 +5,7 @@ import { Booking } from './entity/Booking';
 import { Faculty } from './entity/Faculty';
 import { User } from './entity/User';
 import { Payment } from './entity/Payment';
+import { Picture } from './entity/Picture';
 
 const db = new DataSource({
 	type: 'mysql',
@@ -15,7 +16,7 @@ const db = new DataSource({
 	database: process.env.DATABASE_NAME,
 	synchronize: true,
 	logging: false,
-	entities: [Admin, Event, Booking, Faculty, User, Payment],
+	entities: [Admin, Event, Booking, Faculty, User, Payment, Picture],
 });
 
 export async function checkConnection() {
