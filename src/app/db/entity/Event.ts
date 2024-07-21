@@ -48,7 +48,7 @@ export class Event {
 	fee_required!: boolean;
 
 	@Column('decimal', { precision: 10, scale: 2 })
-	fee_amount!: boolean;
+	fee_amount!: number;
 
 	@Column({
 		type: 'smallint',
@@ -57,9 +57,9 @@ export class Event {
 	max_attendees!: number;
 
 	@Column({
-		type: 'mediumblob',
+		type: 'json',
 	})
-	image!: string;
+	picture_id!: number[];
 
 	@Column({	
     length: 20
