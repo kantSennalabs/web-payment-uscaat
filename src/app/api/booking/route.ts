@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import db from '@/app/db';
 import { Booking } from '@/app/db/entity/Booking';
 import { User } from '@/app/db/entity/User';
+import { Payment } from '@/app/db/entity/Payment';
 import type { CreateBooking } from '@/types/Booking';
 import type LastInsetId from '@/types/LastInsertId';
 
@@ -9,6 +10,7 @@ import type LastInsetId from '@/types/LastInsertId';
   {
     event_id: ###,
     users: [...User],
+		payment: Payment
   }
 */
 export async function POST(req: NextResponse) {
@@ -35,6 +37,17 @@ export async function POST(req: NextResponse) {
 			await queryRunner.manager.insert(Booking, {
 				event_id: body.event_id,
 				user_id: userIdList,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			});
+			const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
+			await queryRunner.manager.insert(Payment, {
+				event_id: body.event_id,
+				booking_id: Number(lastInsertId.lastInsertId),
+				amount: body.payment.amount,
+				payment_date: new Date(),
+				status: 0,
+				payment_image: body.payment.payment_image,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			});
