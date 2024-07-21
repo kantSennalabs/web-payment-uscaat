@@ -112,7 +112,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
                         </Card.Text>
                         <Card.Text style={{ marginBottom: "1rem" }}>
                             <strong>Event Image:</strong>
-                            <Image src={events.image} alt="Event" style={{ width: "100%", marginTop: "10px" }}></Image>
+                            {/* <Image src={events.image} alt="Event" style={{ width: "100%", marginTop: "10px" }}></Image> */}
                         </Card.Text>
                         <Card.Text style={{ marginBottom: "1rem" }}>
                             Contact USCAAT admin for more information

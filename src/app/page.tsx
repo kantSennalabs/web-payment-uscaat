@@ -54,7 +54,7 @@ function Home() {
                                 <Card.Text className="text-muted mb-2">
                                     {format(event.event_datetime, "dd MMM yyyy")}
                                 </Card.Text>
-                                <Button variant="outline-danger" onClick={() => handleViewDetail(event.event_id)}>
+                                <Button variant="outline-danger" onClick={() => handleViewDetail(event.event_id!)}>
                                     View Detail
                                 </Button>
                             </div>
