@@ -12,7 +12,7 @@ function PlusAttendance() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center vh-100" style={{ paddingTop: '15px', paddingBottom: '4rem' }}>
+    <div className="d-flex flex-column align-items-center" style={{ paddingTop: '15px', paddingBottom: '4rem' }}>
       <Card style={{ width: '22rem', borderRadius: '15px', marginBottom: '3rem' }}>
         <Card.Header className="d-flex justify-content-between align-items-center" style={{ backgroundColor: '#d0021b', color: 'white', borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>
           <Button 

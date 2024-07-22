@@ -142,7 +142,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
 
     return (
         <div
-            className="d-flex flex-column align-items-center vh-100"
+            className="d-flex flex-column align-items-center"
             style={{ paddingTop: "15px", paddingBottom: "4rem" }}
         >
             <LoadedEvent />
