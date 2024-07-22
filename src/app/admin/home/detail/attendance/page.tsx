@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useRouter } from 'next/navigation';
 import Card from 'react-bootstrap/Card';
@@ -8,9 +8,9 @@ import Table from 'react-bootstrap/Table';
 function AttendancePage() {
   const router = useRouter();
 
-  const handleBack = () => {
-    router.push('/admin/home/detail');
-  };
+    const handleBack = () => {
+        router.push("/admin/home/detail");
+    };
 
   const handleSlipClick = () => {
     router.push('/admin/home/detail/attendance/slip');
