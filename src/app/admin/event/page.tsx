@@ -210,8 +210,8 @@ function Admin_Event() {
               ))}
             </div>
             <div className="d-flex justify-content-between">
-              <Button variant="outline-secondary" className="w-45" onClick={handleClear} style={{ borderRadius: '20px', fontWeight: 'bold', border: '2px solid #d0021b', color: '#d0021b' }}>Clear</Button>
-              <Button className="w-45" onClick={handleBack} style={{ backgroundColor: '#d0021b', borderColor: '#d0021b', borderRadius: '20px', fontWeight: 'bold', color: 'white' }}>Confirm</Button>
+              <Button variant="outline-secondary" className="w-45" onClick={handleClear} style={{ borderRadius: '20px', fontWeight: 'bold', border: '2px solid #d0021b', color: '#d0021b', width: '48%' }}>Clear</Button>
+              <Button className="w-45" onClick={handleBack} style={{ backgroundColor: '#d0021b', borderColor: '#d0021b', borderRadius: '20px', fontWeight: 'bold', color: 'white', width: '48%' }}>Confirm</Button>
             </div>
           </Form>
         </Card.Body>
