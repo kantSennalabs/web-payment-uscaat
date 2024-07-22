@@ -122,7 +122,7 @@ function Admin_Event() {
             event_location: formValues.eventLocation,
             parking: parking,
             fee_required: feeRequire,
-            fee_amount: feeRequire ? formValues.feeAmount : null,
+            fee_amount: feeRequire ? formValues.feeAmount : 0,
             max_attendees: formValues.maximum,
             picture: previews.map((item) => item.src),
             contact: "0863796296",
