@@ -8,14 +8,21 @@ import axios from "axios";
 import type { Event } from "@/app/db/entity/Event";
 import { format } from "date-fns";
 import Image from "next/image";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 function EventDetail({ params }: { params: { event_id: string } }) {
     const router = useRouter();
     const event_id: number = Number(params.event_id);
+    const [showDropdown, setShowDropdown] = useState(false);   
     const [events, setEvent]: [Event, any] = useState<Event>({} as Event);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+      };
+    
     const handleBack = () => {
         router.push("/admin/home");
     };
@@ -52,6 +59,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
                             color: "white",
                             borderTopLeftRadius: "15px",
                             borderTopRightRadius: "15px",
+                            height: "47px"
                         }}
                     >
                         <Button
@@ -70,7 +78,19 @@ function EventDetail({ params }: { params: { event_id: string } }) {
                             &lt;
                         </Button>
                         <strong>Event Detail</strong>
-                        <div style={{ width: "50px" }}></div> {/* Placeholder */}
+                        <DropdownButton
+                          variant="link"
+                          title={<span style={{ color: 'white', fontSize: '24px' }}>⋮</span>}
+                          align="end"
+                          show={showDropdown}
+                          onToggle={toggleDropdown}
+                          style={{ padding: 0, margin: 0, outline: "none" }}
+                        >
+                          <Dropdown.Item onClick={() => {}}>
+                            Delete Event
+                          </Dropdown.Item>
+                        </DropdownButton>
+                        
                     </Card.Header>
                     <Card.Body>
                         <Card.Text style={{ marginBottom: "1rem" }}>
@@ -118,12 +138,12 @@ function EventDetail({ params }: { params: { event_id: string } }) {
                             Contact USCAAT admin for more information
                         </Card.Text>
                         <div className="d-flex justify-content-between">
-                            <Button variant="secondary" onClick={editEvent}>
+                            <Button variant="secondary" onClick={editEvent} style={{ backgroundColor: '#A21D22', borderColor: '#A21D22', fontWeight: 'bold', color: 'white', width: '47%', borderRadius: "10px"  }}>
                                 Edit
                             </Button>
                             <Button
                                 onClick={handleAttendance}
-                                style={{ backgroundColor: "#d0021b", borderColor: "#d0021b" }}
+                                style={{ backgroundColor: '#A21D22', borderColor: '#A21D22', fontWeight: 'bold', color: 'white', width: '47%', borderRadius: "10px" }}
                             >
                                 Attendance
                             </Button>
