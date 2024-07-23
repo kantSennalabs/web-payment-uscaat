@@ -44,7 +44,9 @@ export async function PUT(req: Request, context: { params: Params }) {
 	await queryRunner.connect();
 	await queryRunner.startTransaction();
 	try {
-		await queryRunner.manager.delete(Picture, existingEvent.picture_id);
+		if (existingEvent.picture_id.length) {
+			await queryRunner.manager.delete(Picture, existingEvent.picture_id);
+		}
 
 		const pictureIdList = [];
 		for (const base64 of body.picture) {

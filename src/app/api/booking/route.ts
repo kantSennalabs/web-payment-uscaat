@@ -34,16 +34,16 @@ export async function POST(req: NextResponse) {
 				const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
 				userIdList.push(Number(lastInsertId.lastInsertId));
 			}
-			const insertDataBooking: Booking = {
+			await queryRunner.manager.insert(Booking, {
 				event_id: body.event_id,
 				user_id: userIdList,
 				createdAt: new Date(),
 				updatedAt: new Date(),
-			}
-			await queryRunner.manager.insert(Booking, insertDataBooking);
+			});
+			const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
 			await queryRunner.manager.insert(Payment, {
 				event_id: body.event_id,
-				booking_id: insertDataBooking,
+				booking_id: Number(lastInsertId.lastInsertId),
 				amount: body.payment.amount,
 				payment_date: new Date(),
 				status: 0,
@@ -59,22 +59,6 @@ export async function POST(req: NextResponse) {
 			await queryRunner.release();
 		}
 		return NextResponse.json('Create Booking Successful', { status: 201 });
-	} catch (error) {
-		console.error(error);
-		return NextResponse.json('Database Error', { status: 507 });
-	} finally {
-		await db.destroy();
-	}
-}
-
-export async function GET(req: NextResponse) {
-	try {
-		if (!db.isInitialized) {
-			await db.initialize();
-		}
-		const bookingRepository = db.getRepository(Booking);
-		const bookingList: Booking[] = await bookingRepository.find();
-		return NextResponse.json(bookingList);
 	} catch (error) {
 		console.error(error);
 		return NextResponse.json('Database Error', { status: 507 });
