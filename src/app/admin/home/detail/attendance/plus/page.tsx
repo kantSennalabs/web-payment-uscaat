@@ -8,7 +8,7 @@ function PlusAttendance() {
   const router = useRouter();
 
   const handleBack = () => {
-    router.push('/admin/home/detail/attendance');
+    router.back();
   };
 
   return (

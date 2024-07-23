@@ -37,7 +37,7 @@ function Admin_Event() {
     const handleFeeRequireChange = () => setFeeRequire(!feeRequire);
 
     const handleBack = () => {
-        router.push("/admin/home");
+        router.back();
     };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +110,7 @@ function Admin_Event() {
         return errors;
     };
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmitAndBack = async (e: any) => {
         e.preventDefault();
 
         const formData = {
@@ -122,7 +122,7 @@ function Admin_Event() {
             event_location: formValues.eventLocation,
             parking: parking,
             fee_required: feeRequire,
-            fee_amount: feeRequire ? formValues.feeAmount : null,
+            fee_amount: feeRequire ? formValues.feeAmount : 0,
             max_attendees: formValues.maximum,
             picture: previews.map((item) => item.src),
             contact: "0863796296",
@@ -154,8 +154,8 @@ function Admin_Event() {
 
     return (
         <div
-            className="d-flex justify-content-center align-items-start w-100"
-            style={{ paddingTop: "2rem", paddingBottom: "2rem" }}
+        className="d-flex justify-content-center align-items-start w-100"
+        style={{ paddingTop: "2rem", paddingBottom: "2rem", marginBottom: "3rem"  }}
         >
             <Card style={{ width: "22rem", borderRadius: "15px" }}>
                 <Card.Header
@@ -355,21 +355,23 @@ function Admin_Event() {
                                 className="w-45"
                                 onClick={handleClear}
                                 style={{
-                                    borderRadius: "20px",
+                                    borderRadius: "10px",
+                                    width: '47%',
                                     fontWeight: "bold",
-                                    border: "2px solid #d0021b",
-                                    color: "#d0021b",
+                                    border: "2px solid #A21D22",
+                                    color: "#A21D22",
                                 }}
                             >
                                 Clear
                             </Button>
                             <Button
                                 className="w-45"
-                                onClick={handleSubmit}
+                                onClick={handleSubmitAndBack}
                                 style={{
-                                    backgroundColor: "#d0021b",
-                                    borderColor: "#d0021b",
-                                    borderRadius: "20px",
+                                    backgroundColor: "#A21D22",
+                                    borderColor: "#A21D22",
+                                    borderRadius: "10px",
+                                    width: '47%',
                                     fontWeight: "bold",
                                     color: "white",
                                 }}
