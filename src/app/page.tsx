@@ -34,7 +34,7 @@ function Home() {
     return (
         <div
             className="d-flex flex-column align-items-center "
-            style={{ backgroundColor: "#f8f9fa", paddingTop: "2rem" }}
+            style={{ backgroundColor: "#f8f9fa", paddingTop: "2rem", paddingBottom: "3rem" }}
         >
             <div className="w-100 px-3">
                 {events.map((event, index) => (
