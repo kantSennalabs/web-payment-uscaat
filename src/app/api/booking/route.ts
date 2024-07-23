@@ -34,16 +34,16 @@ export async function POST(req: NextResponse) {
 				const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
 				userIdList.push(Number(lastInsertId.lastInsertId));
 			}
-			await queryRunner.manager.insert(Booking, {
+			const insertDataBooking: Booking = {
 				event_id: body.event_id,
 				user_id: userIdList,
 				createdAt: new Date(),
 				updatedAt: new Date(),
-			});
-			const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
+			}
+			await queryRunner.manager.insert(Booking, insertDataBooking);
 			await queryRunner.manager.insert(Payment, {
 				event_id: body.event_id,
-				booking_id: Number(lastInsertId.lastInsertId),
+				booking_id: insertDataBooking,
 				amount: body.payment.amount,
 				payment_date: new Date(),
 				status: 0,

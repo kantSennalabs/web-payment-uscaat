@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Booking } from './Booking';
 
 @Entity()
 export class Payment {
@@ -12,10 +13,9 @@ export class Payment {
 	})
 	event_id!: number;
 
-	@Column({
-		unsigned: true,
-	})
-	booking_id!: number;
+	@OneToOne(() => Booking)
+	@JoinColumn({ name: 'booking_id' })
+	booking_id!: Booking;
 
 	@Column({
 		type: 'decimal',

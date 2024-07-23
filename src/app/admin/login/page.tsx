@@ -32,7 +32,7 @@ function Admin_Login() {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-start vh-100" style={{ paddingTop: "2rem" }}>
+        <div className="d-flex justify-content-center align-items-start" style={{ paddingTop: "2rem" }}>
             <Card style={{ width: "22rem", borderRadius: "15px", marginBottom: "3rem" }}>
                 <Card.Header
                     className="d-flex align-items-center justify-content-center text-center"
