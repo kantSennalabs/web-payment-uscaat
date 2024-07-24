@@ -150,7 +150,7 @@ function EditEvent({ params }: { params: { event_id: string } }) {
         console.log(updatedEvent);
         try {
             await axios.put(`/api/event/${event_id}`, updatedEvent);
-            // router.push("/admin/home");
+            router.push("/admin/home");
         } catch (err) {
             console.error("Error updating event:", err);
             setError("Error updating event");
