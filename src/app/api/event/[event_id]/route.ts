@@ -52,7 +52,7 @@ export async function PUT(req: Request, context: { params: Params }) {
             const pictureIdList = [];
             for (const base64 of body.picture) {
                 await queryRunner.manager.insert(Picture, {
-                    picture: base64,
+                    picture: base64.split(',')[1],
                     createdAt: new Date(),
                 });
                 const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(

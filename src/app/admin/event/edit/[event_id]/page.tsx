@@ -140,12 +140,14 @@ function EditEvent({ params }: { params: { event_id: string } }) {
             event_datetime: `${formValues.date}T${formValues.time}`,
             register_before: formValues.registerBefore,
             event_description: formValues.eventDescription,
+            event_address: formValues.eventLocation,
             event_location: formValues.eventLocation,
+            parking: parking,
             fee_required: feeRequire,
-            fee_amount: feeRequire ? Number(formValues.feeAmount) : 0,
-            max_attendees: Number(formValues.maximum),
-            parking,
-            picture: files.map((file) => file.name),
+            fee_amount: feeRequire ? formValues.feeAmount : 0,
+            max_attendees: formValues.maximum,
+            picture: previews.map((item) => item.src),
+            contact: "0863796296",
         };
         console.log(updatedEvent);
         try {
@@ -331,12 +333,14 @@ function EditEvent({ params }: { params: { event_id: string } }) {
 
                             <div className="mb-3">
                                 {previews.map((preview, index) => (
-                                    <div key={index} className="position-relative mb-2">
+                                    <div key={index} className="position-relative mb-2" style={{ height: "150px" }}>
                                         {preview.type === "image" ? (
                                             <Image
-                                                src="/hotel.png"
+                                                src={preview.src!}
                                                 alt="Preview"
-                                                style={{ width: "100%", marginBottom: "10px", borderRadius: "8px" }}
+                                                fill={true}
+                                                objectFit="contain"
+                                                style={{ marginBottom: "10px", borderRadius: "8px" }}
                                             />
                                         ) : (
                                             <p>{preview.name}</p>

@@ -43,6 +43,18 @@ function EventDetail({ params }: { params: { event_id: string } }) {
             setLoading(false);
         }
     };
+    const deleteEvent = async () => {
+        try {
+            const response = await axios.delete(`/api/event/${event_id}`);
+            if (response.status === 200) {
+                router.push('/admin/home');
+            }
+        } catch (error) {
+            console.error("Error fetching event:", err);
+            setError("Error fetching event details");
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
         fetchEvent();
@@ -86,7 +98,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
                             onToggle={toggleDropdown}
                             style={{ padding: 0, margin: 0, outline: "none" }}
                         >
-                            <Dropdown.Item onClick={() => {}}>Delete Event</Dropdown.Item>
+                            <Dropdown.Item onClick={() => {deleteEvent()}}>Delete Event</Dropdown.Item>
                         </DropdownButton>
                     </Card.Header>
                     <Card.Body>

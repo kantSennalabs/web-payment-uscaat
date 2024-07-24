@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 			const pictureIdList = [];
 			for (const base64 of body.picture) {
 				await queryRunner.manager.insert(Picture, {
-					picture: base64,
+					picture: base64.split(',')[1],
 					createdAt: new Date(),
 				});
 				const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);

@@ -3,11 +3,13 @@
 import { useRouter } from "next/navigation";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Carousel from 'react-bootstrap/Carousel';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import type { Event } from "@/app/db/entity/Event";
 import { format } from "date-fns";
 import Image from "next/image";
+import { getBase64FromDatabase } from "@/app/util/base64";
 
 function EventDetail({ params }: { params: { event_id: string } }) {
     const router = useRouter();
@@ -15,7 +17,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
     const [events, setEvent]: [Event, any] = useState<Event>({} as Event);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [pictureUrl, setPictureUrl] = useState<string | null>(null);
+    const [pictureUrl, setPictureUrl] = useState<string[]>([]);
 
     const handleBack = () => {
         router.push("/admin/home");
@@ -29,9 +31,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
     const fetchPicture = async (picture_id: number) => {
         try {
             const response = await axios.get(`/api/picture/${picture_id}`);
-            if (response.status === 200) {
-                setPictureUrl(response.data.url); // Assuming the picture URL is stored in the `url` field
-            }
+            return response.data.picture;
         } catch (err) {
             console.error("Error fetching picture:", err);
             setError("Error fetching picture");
@@ -42,8 +42,15 @@ function EventDetail({ params }: { params: { event_id: string } }) {
             const response = await axios.get(`/api/event/${event_id}`);
             setEvent(response.data);
             setLoading(false);
-            if (response.data.picture_id) {
-                fetchPicture(response.data.picture_id);
+            const data = response.data as Event;
+            if (data.picture_id.length) {
+                const pictureList = [];
+                for (const picture_id of data.picture_id) {
+                    pictureList.push(await fetchPicture(picture_id));
+                }
+                setPictureUrl([...pictureList]);
+                console.log(pictureList);
+                
             }
         } catch (err) {
             console.error("Error fetching event:", err);
@@ -125,10 +132,17 @@ function EventDetail({ params }: { params: { event_id: string } }) {
                         <Card.Text style={{ marginBottom: "1rem" }}>
                             <strong>Maximum number of Attendees:</strong> {events.max_attendees} people
                         </Card.Text>
-                        <Card.Text style={{ marginBottom: "1rem" }}>
+                        {/* <Card.Text style={{ marginBottom: "1rem" }}>
                             <strong>Event Image:</strong>
                             <Image src={pictureUrl!} alt="Event" style={{ width: "100%", marginTop: "10px" }}></Image>
-                        </Card.Text>
+                        </Card.Text> */}
+                        <Carousel>
+                            {pictureUrl.map((picture, index) => (
+                                <Carousel.Item key={index}>
+                                    <Image src={picture} alt="Event" width={100} height={100}></Image>
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
                         <Card.Text style={{ marginBottom: "1rem" }}>
                             Contact USCAAT admin for more information
                         </Card.Text>
