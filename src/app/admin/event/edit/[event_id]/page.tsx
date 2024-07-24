@@ -10,6 +10,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Image from "next/image";
 import axios from "axios";
 import type { Event } from "@/app/db/entity/Event";
+import { format } from "date-fns";
 
 interface Preview {
     type: string;
@@ -36,11 +37,14 @@ function EditEvent({ params }: { params: { event_id: string } }) {
         feeAmount: "",
         maximum: "",
     });
-
+    //format send date
+    // 2024-07-31T21:00
     const fetchEvent = async () => {
         try {
             const response = await axios.get(`/api/event/${event_id}`);
-            setEvent(response.data);
+            const eventData = response.data;
+            // const formattedDate = format(eventData.date, "yyyy-MM-ddTHH:mm");
+            setEvent(eventData);
         } catch (err) {
             console.error("Error fetching event:", err);
             setError("Error fetching event details");
@@ -52,16 +56,18 @@ function EditEvent({ params }: { params: { event_id: string } }) {
     }, [event_id]);
 
     useEffect(() => {
-        setFormValues({
-            eventName: events.event_name,
-            date: "",
-            time: "",
-            registerBefore: "",
-            eventDescription: "",
-            eventLocation: "",
-            feeAmount: "",
-            maximum: "",
-        });
+        if (Object.keys(events).length) {
+            setFormValues({
+                eventName: events.event_name,
+                date: format(events.event_datetime, "yyyy-MM-dd"),
+                time: format(events.event_datetime, "HH:mm"),
+                registerBefore: format(events.register_before, "yyyy-MM-dd"),
+                eventDescription: events.event_description,
+                eventLocation: events.event_location,
+                feeAmount: String(events.fee_amount),
+                maximum: String(events.max_attendees),
+            });
+        }
     }, [events]);
 
     const handleParkingChange = () => setParking(!parking);
@@ -128,6 +134,28 @@ function EditEvent({ params }: { params: { event_id: string } }) {
             [id]: value,
         }));
     };
+    const handleSubmit = async () => {
+        const updatedEvent = {
+            event_name: formValues.eventName,
+            event_datetime: `${formValues.date}T${formValues.time}`,
+            register_before: formValues.registerBefore,
+            event_description: formValues.eventDescription,
+            event_location: formValues.eventLocation,
+            fee_required: feeRequire,
+            fee_amount: feeRequire ? Number(formValues.feeAmount) : 0,
+            max_attendees: Number(formValues.maximum),
+            parking,
+            picture: files.map((file) => file.name),
+        };
+        console.log(updatedEvent);
+        try {
+            await axios.put(`/api/event/${event_id}`, updatedEvent);
+            // router.push("/admin/home");
+        } catch (err) {
+            console.error("Error updating event:", err);
+            setError("Error updating event");
+        }
+    };
 
     if (Object.keys(events).length) {
         return (
@@ -162,7 +190,7 @@ function EditEvent({ params }: { params: { event_id: string } }) {
                         >
                             &lt;
                         </Button>
-                        <strong>Create Event</strong>
+                        <strong>Edit Event</strong>
                         <div style={{ width: "40px" }}></div>
                     </Card.Header>
                     <Card.Body>
@@ -341,7 +369,7 @@ function EditEvent({ params }: { params: { event_id: string } }) {
                                 </Button>
                                 <Button
                                     className="w-45"
-                                    onClick={handleBack}
+                                    onClick={handleSubmit}
                                     style={{
                                         backgroundColor: "#d0021b",
                                         borderColor: "#d0021b",

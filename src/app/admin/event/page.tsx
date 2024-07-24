@@ -98,17 +98,17 @@ function Admin_Event() {
         }));
     };
 
-    const validateForm = () => {
-        const errors: string[] = [];
-        if (!formValues.eventName) errors.push("Event name is required.");
-        if (!formValues.date || !formValues.time) errors.push("Event date and time are required.");
-        if (!formValues.registerBefore) errors.push("Registration deadline is required.");
-        if (!formValues.eventDescription) errors.push("Event description is required.");
-        if (!formValues.eventLocation) errors.push("Event location is required.");
-        if (feeRequire && !formValues.feeAmount) errors.push("Fee amount is required if fee is required.");
-        if (!formValues.maximum) errors.push("Maximum attendees are required.");
-        return errors;
-    };
+    // const validateForm = () => {
+    //     const errors: string[] = [];
+    //     if (!formValues.eventName) errors.push("Event name is required.");
+    //     if (!formValues.date || !formValues.time) errors.push("Event date and time are required.");
+    //     if (!formValues.registerBefore) errors.push("Registration deadline is required.");
+    //     if (!formValues.eventDescription) errors.push("Event description is required.");
+    //     if (!formValues.eventLocation) errors.push("Event location is required.");
+    //     if (feeRequire && !formValues.feeAmount) errors.push("Fee amount is required if fee is required.");
+    //     if (!formValues.maximum) errors.push("Maximum attendees are required.");
+    //     return errors;
+    // };
 
     const handleSubmitAndBack = async (e: any) => {
         e.preventDefault();
@@ -129,7 +129,6 @@ function Admin_Event() {
         };
 
         try {
-            console.log(formData);
             const response = await axios.post("/api/event", formData);
             if (response.status === 201) {
                 alert("Event created successfully!");
@@ -154,8 +153,8 @@ function Admin_Event() {
 
     return (
         <div
-        className="d-flex justify-content-center align-items-start w-100"
-        style={{ paddingTop: "2rem", paddingBottom: "2rem", marginBottom: "3rem"  }}
+            className="d-flex justify-content-center align-items-start w-100"
+            style={{ paddingTop: "2rem", paddingBottom: "2rem", marginBottom: "3rem" }}
         >
             <Card style={{ width: "22rem", borderRadius: "15px" }}>
                 <Card.Header
@@ -356,7 +355,7 @@ function Admin_Event() {
                                 onClick={handleClear}
                                 style={{
                                     borderRadius: "10px",
-                                    width: '47%',
+                                    width: "47%",
                                     fontWeight: "bold",
                                     border: "2px solid #A21D22",
                                     color: "#A21D22",
@@ -371,7 +370,7 @@ function Admin_Event() {
                                     backgroundColor: "#A21D22",
                                     borderColor: "#A21D22",
                                     borderRadius: "10px",
-                                    width: '47%',
+                                    width: "47%",
                                     fontWeight: "bold",
                                     color: "white",
                                 }}

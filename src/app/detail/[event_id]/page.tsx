@@ -15,6 +15,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
     const [events, setEvent]: [Event, any] = useState<Event>({} as Event);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [pictureUrl, setPictureUrl] = useState<string | null>(null);
 
     const handleBack = () => {
         router.push("/admin/home");
@@ -25,11 +26,25 @@ function EventDetail({ params }: { params: { event_id: string } }) {
     const handleAttendance = () => {
         router.push("/admin/home/detail/attendance");
     };
+    const fetchPicture = async (picture_id: number) => {
+        try {
+            const response = await axios.get(`/api/picture/${picture_id}`);
+            if (response.status === 200) {
+                setPictureUrl(response.data.url); // Assuming the picture URL is stored in the `url` field
+            }
+        } catch (err) {
+            console.error("Error fetching picture:", err);
+            setError("Error fetching picture");
+        }
+    };
     const fetchEvent = async () => {
         try {
             const response = await axios.get(`/api/event/${event_id}`);
             setEvent(response.data);
             setLoading(false);
+            if (response.data.picture_id) {
+                fetchPicture(response.data.picture_id);
+            }
         } catch (err) {
             console.error("Error fetching event:", err);
             setError("Error fetching event details");
@@ -112,7 +127,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
                         </Card.Text>
                         <Card.Text style={{ marginBottom: "1rem" }}>
                             <strong>Event Image:</strong>
-                            {/* <Image src={} alt="Event" style={{ width: "100%", marginTop: "10px" }}></Image> */}
+                            <Image src={pictureUrl!} alt="Event" style={{ width: "100%", marginTop: "10px" }}></Image>
                         </Card.Text>
                         <Card.Text style={{ marginBottom: "1rem" }}>
                             Contact USCAAT admin for more information
@@ -141,10 +156,7 @@ function EventDetail({ params }: { params: { event_id: string } }) {
     };
 
     return (
-        <div
-            className="d-flex flex-column align-items-center"
-            style={{ paddingTop: "15px", paddingBottom: "4rem" }}
-        >
+        <div className="d-flex flex-column align-items-center" style={{ paddingTop: "15px", paddingBottom: "4rem" }}>
             <LoadedEvent />
         </div>
     );
