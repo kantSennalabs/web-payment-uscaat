@@ -42,5 +42,7 @@ export async function GET(req: Request, context: { params: Params }) {
 	} catch (error) {
 		console.error(error);
 		return NextResponse.json('Database Error', { status: 507 });
+	} finally {
+		await db.destroy();
 	}
 }
