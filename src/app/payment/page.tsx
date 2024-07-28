@@ -48,8 +48,13 @@ function ESlipView() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center" style={{ paddingTop: '15px', paddingBottom: '4rem' }}>
-      <Card style={{ width: '22rem', borderRadius: '15px', marginBottom: '1rem' }}>
+    <div
+      className="d-flex flex-column align-items-center"
+      style={{ paddingTop: '15px', paddingBottom: '4rem' }}
+    >
+      <Card
+        style={{ width: '22rem', borderRadius: '15px', marginBottom: '1rem' }}
+      >
         <Card.Header
           className="d-flex justify-content-between align-items-center"
           style={{
@@ -57,8 +62,8 @@ function ESlipView() {
             color: 'white',
             borderTopLeftRadius: '15px',
             borderTopRightRadius: '15px',
-            height: '50px', 
-            padding: '10px 15px', 
+            height: '50px',
+            padding: '10px 15px',
           }}
         >
           <Button
@@ -77,7 +82,7 @@ function ESlipView() {
               boxShadow: 'none',
             }}
             onClick={handleBack}
-            onMouseDown={(e) => e.preventDefault()} 
+            onMouseDown={(e) => e.preventDefault()}
           >
             &lt;
           </Button>
@@ -87,50 +92,62 @@ function ESlipView() {
         <Card.Body>
           <div className="d-flex align-items-center">
             <Image
-              src="/bank.png" 
+              src="/bank.png"
               alt="Bank Logo"
               width={55}
               height={55}
               style={{ borderRadius: '50%' }}
             />
-            <div className="ms-3" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <h5 style={{ fontWeight: 'bold', marginBottom: '5px' }}>Chin Kongchalat</h5>
-              <p style={{ fontWeight: 'bold', marginBottom: '0' }}>Kasikorn Bank 012-3-45678-9</p>
+            <div
+              className="ms-3"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              <h5 style={{ fontWeight: 'bold', marginBottom: '5px' }}>
+                Chin Kongchalat
+              </h5>
+              <p style={{ fontWeight: 'bold', marginBottom: '0' }}>
+                Kasikorn Bank 012-3-45678-9
+              </p>
             </div>
           </div>
           <div className="text-center">
-          <Button 
-            variant="danger" 
-            onClick={handleCopy} 
-            style={{ 
-             marginBottom: '1rem', 
-             borderRadius: '50px', 
-             padding: '0.375rem 0.75rem',
-             width: '60%', 
-             fontSize: '0.875rem', 
-             backgroundColor: '#A21D22', 
-             borderColor: '#A21D22',
-             marginTop: '10px' 
-            }}
+            <Button
+              variant="danger"
+              onClick={handleCopy}
+              style={{
+                marginBottom: '1rem',
+                borderRadius: '50px',
+                padding: '0.375rem 0.75rem',
+                width: '60%',
+                fontSize: '0.875rem',
+                backgroundColor: '#A21D22',
+                borderColor: '#A21D22',
+                marginTop: '10px',
+              }}
             >
-            {showCopied ? 'Copied!' : 'Copy Account Number'}
+              {showCopied ? 'Copied!' : 'Copy Account Number'}
             </Button>
           </div>
         </Card.Body>
       </Card>
-      <p className="text-start">Total People: 3</p>
-      <p className="text-start">Total Amount Due: 1,500 Baht</p>
+      <div style={{ width: '22rem' }}>
+        <p className="text-start">Total People: 3</p>
+        <p className="text-start">Total Amount Due: 1,500 Baht</p>
+      </div>
       <Button
         variant="outline-secondary"
-        className="w-45"
         onClick={() => setShowModal(true)}
         style={{
-          borderRadius: "20px",
+          borderRadius: '20px',
           marginTop: '1rem',
-          width: '47%',
-          fontWeight: "bold",
-          border: "2px solid #A21D22",
-          color: "#A21D22",
+          width: '22rem',
+          fontWeight: 'bold',
+          border: '2px solid #A21D22',
+          color: '#A21D22',
         }}
       >
         Upload e-Slip
@@ -144,11 +161,17 @@ function ESlipView() {
           <Form>
             <Form.Group>
               <Form.Label>Select File</Form.Label>
-              <Form.Control type="file" accept=".jpg,.jpeg,.png,.pdf" onChange={handleFileChange} />
+              <Form.Control
+                type="file"
+                accept=".jpg,.jpeg,.png,.pdf"
+                onChange={handleFileChange}
+              />
             </Form.Group>
-            <Button variant="primary" onClick={handleUpload} className="mt-3">
-              Upload
-            </Button>
+            <div className="d-flex justify-content-center mt-3">
+              <Button variant="primary" onClick={handleUpload} className="mt-3">
+                Upload
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>
