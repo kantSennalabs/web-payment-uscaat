@@ -14,11 +14,15 @@ export async function GET(req: Request, context: { params: Params }) {
 		}
 		const picture_id = Number(context.params.picture_id);
 		const pictureRepository = db.getRepository(Picture);
-		const foundPicture: any = await pictureRepository.findOneBy({ picture_id });
+		const foundPicture: any = await pictureRepository.findOneBy({
+			picture_id,
+		});
 		if (!foundPicture) {
 			return NextResponse.json('Picture Not Found', { status: 404 });
 		}
-		return NextResponse.json('data:image/png;base64,/' + foundPicture.picture.toString('base64'));
+		return NextResponse.json(
+			'data:image/png;base64,/' + foundPicture.picture.toString('base64')
+		);
 	} catch (error) {
 		console.error(error);
 		return NextResponse.json('Database Error', { status: 507 });

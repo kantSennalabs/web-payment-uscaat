@@ -21,7 +21,10 @@ export async function POST(req: Request) {
 					picture: base64.split(',')[1],
 					createdAt: new Date(),
 				});
-				const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
+				const [lastInsertId]: LastInsetId[] =
+					await queryRunner.manager.query(
+						`SELECT LAST_INSERT_ID() AS lastInsertId;`
+					);
 				pictureIdList.push(Number(lastInsertId.lastInsertId));
 			}
 			const eventData: Event = {
@@ -43,6 +46,7 @@ export async function POST(req: Request) {
 			await queryRunner.manager.insert(Event, eventData);
 			await queryRunner.commitTransaction();
 		} catch (error) {
+			console.error(error);
 			await queryRunner.rollbackTransaction();
 			throw error;
 		} finally {

@@ -31,7 +31,10 @@ export async function POST(req: NextResponse) {
 					updatedAt: new Date(),
 				};
 				await queryRunner.manager.insert(User, insertData);
-				const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
+				const [lastInsertId]: LastInsetId[] =
+					await queryRunner.manager.query(
+						`SELECT LAST_INSERT_ID() AS lastInsertId;`
+					);
 				userIdList.push(Number(lastInsertId.lastInsertId));
 			}
 			await queryRunner.manager.insert(Booking, {
@@ -40,7 +43,10 @@ export async function POST(req: NextResponse) {
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			});
-			const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(`SELECT LAST_INSERT_ID() AS lastInsertId;`);
+			const [lastInsertId]: LastInsetId[] =
+				await queryRunner.manager.query(
+					`SELECT LAST_INSERT_ID() AS lastInsertId;`
+				);
 			await queryRunner.manager.insert(Payment, {
 				event_id: body.event_id,
 				booking_id: Number(lastInsertId.lastInsertId),
