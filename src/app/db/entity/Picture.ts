@@ -10,7 +10,7 @@ export class Picture {
 	@Column({
 		type: 'mediumblob',
 	})
-	picture!: string;
+	picture!: string | ArrayBuffer;
 
 	@Column({
 		type: 'datetime',

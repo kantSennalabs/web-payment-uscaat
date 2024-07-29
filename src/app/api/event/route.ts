@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         fee_required: body.fee_required,
         fee_amount: body.fee_amount,
         max_attendees: body.max_attendees,
-        picture_id: pictureIdList,
+        picture_id: [],
         contact: body.contact,
         createdAt: new Date(),
         updatedAt: new Date(),

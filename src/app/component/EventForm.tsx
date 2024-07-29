@@ -27,9 +27,21 @@ export default function EventForm(props: Readonly<ComponentProps>) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { id, value } = e.target;
+
     props.setFormValues((prevValues) => ({
       ...prevValues,
       [id]: value,
+    }));
+  };
+
+  const handleSwitchChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id } = e.target;
+
+    props.setFormValues((prevValues) => ({
+      ...prevValues,
+      [id]: !prevValues[id as keyof FormValuesEvent],
     }));
   };
 
@@ -44,6 +56,7 @@ export default function EventForm(props: Readonly<ComponentProps>) {
           reader.onload = (e: ProgressEvent<FileReader>) => {
             if (e.target && typeof e.target.result === 'string') {
               newFile.push(e.target.result);
+              console.log(e.target.result);
               if (newFile.length === selectedFiles.length) {
                 props.setFormValues((prevValues) => ({
                   ...prevValues,
@@ -253,7 +266,7 @@ export default function EventForm(props: Readonly<ComponentProps>) {
                 id="parking"
                 label=""
                 checked={props.formValues.parking}
-                onChange={handleInputChange}
+                onChange={handleSwitchChange}
               />
             </Form.Group>
 
@@ -267,7 +280,7 @@ export default function EventForm(props: Readonly<ComponentProps>) {
                   id="feeRequire"
                   label=""
                   checked={props.formValues.feeRequire}
-                  onChange={handleInputChange}
+                  onChange={handleSwitchChange}
                 />
                 <FloatingLabel
                   controlId="feeAmount"

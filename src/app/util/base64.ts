@@ -1,7 +1,6 @@
-export function getBase64FromDatabase(arrayBuffer: ArrayBuffer) {
+export async function getBase64FromDatabase(base64Prepend: string, arrayBuffer: ArrayBuffer) {
 	const buffer = Buffer.from(arrayBuffer);
-	return 'data:image/png;base64,' + buffer.toString('base64');
-	// return buffer.toString('base64');
+	return base64Prepend.concat(',', buffer.toString('base64'));
 }
 
 export function getBase64FromFile(file: File): Promise<string> {
