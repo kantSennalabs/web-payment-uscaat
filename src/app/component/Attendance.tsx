@@ -147,7 +147,7 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
                               handlePlusClick(bookingItem.booking_id!)
                             }
                             style={{
-                              color: 'blue',
+                              color: 'green',
                               padding: 0,
                               textDecoration: 'none',
                             }}
