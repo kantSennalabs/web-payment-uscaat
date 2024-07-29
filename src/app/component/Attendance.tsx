@@ -177,118 +177,6 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
                       )}
                     </tr>
                   ))}
-                  {/* <tr>
-                  <td>
-                    Nitwaree(Ai)
-                    <Button
-                      variant="link"
-                      onClick={handlePlusClick}
-                      style={{
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      +2
-                    </Button>
-                  </td>
-                  <td style={{ textAlign: 'right' }}>
-                    <span style={{ color: 'green', fontSize: '20px' }}>✔️</span>
-                    <Button
-                      variant="link"
-                      onClick={handleSlipClick}
-                      style={{
-                        marginLeft: '10px',
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      Slip
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Chin</td>
-                  <td style={{ textAlign: 'right' }}>
-                    <Button
-                      variant="link"
-                      style={{
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                    <Button
-                      variant="link"
-                      onClick={handleSlipClick}
-                      style={{
-                        marginLeft: '10px',
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      Slip
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Neo</td>
-                  <td style={{ textAlign: 'right' }}>
-                    <Button
-                      variant="link"
-                      style={{
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                    <Button
-                      variant="link"
-                      onClick={handleSlipClick}
-                      style={{
-                        marginLeft: '10px',
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      Slip
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Memi</td>
-                  <td style={{ textAlign: 'right' }}>
-                    <Button
-                      variant="link"
-                      style={{
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                    <Button
-                      variant="link"
-                      onClick={handleSlipClick}
-                      style={{
-                        marginLeft: '10px',
-                        color: 'blue',
-                        padding: 0,
-                        textDecoration: 'none',
-                      }}
-                    >
-                      Slip
-                    </Button>
-                  </td>
-                </tr> */}
                 </tbody>
               </Table>
             </Card.Body>
@@ -296,7 +184,7 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
         </div>
       ) : (
         <div>
-          <h1 className='text-center'>Loading...</h1>
+          <h1 className="text-center">Loading...</h1>
         </div>
       )}
     </>
