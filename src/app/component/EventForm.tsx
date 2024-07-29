@@ -18,7 +18,7 @@ interface ComponentProps {
   setFormValues: Dispatch<SetStateAction<FormValuesEvent>>;
   isEdit: boolean;
   handleBack(): void;
-  handleDelete(): void;
+  handleDelete?(): void;
   submitEvent(event: CreateEditEvent): void;
 }
 

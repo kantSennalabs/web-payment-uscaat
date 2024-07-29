@@ -82,7 +82,7 @@ function EditEvent({ params }: Readonly<{ params: { event_id: string } }>) {
     try {
       const response = await adminInstance.put(`/api/event/${event_id}`, event);
       if (response.status === 200) {
-        router.back();
+        router.push('/admin');
       }
     } catch (error) {
       console.error(error);
