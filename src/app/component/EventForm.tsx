@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Image from 'next/image';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import { parseISO } from 'date-fns';
 
 import type { Dispatch, SetStateAction } from 'react';
@@ -139,7 +141,31 @@ export default function EventForm(props: Readonly<ComponentProps>) {
             &lt;
           </Button>
           <strong>{props.isEdit ? 'Edit' : 'Create'} Event</strong>
-          <div style={{ width: '40px' }}></div>
+          {props.isEdit && (
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="link"
+                style={{
+                  color: 'white',
+                  fontSize: '24px',
+                  textDecoration: 'none',
+                  padding: '0',
+                  margin: '0 10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                }}
+              ></Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                // onClick={() => props.deleteEvent(props.formValues.event_id)}
+                >
+                  Delete Event
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </Card.Header>
         <Card.Body>
           <Form>
