@@ -59,7 +59,7 @@ export class Event {
 	@Column({
 		type: 'json',
 	})
-	picture_id!: number[];
+	picture_id!: string[];
 
 	@Column({	
     length: 20

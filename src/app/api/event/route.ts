@@ -6,6 +6,8 @@ import { Booking } from '@/app/db/entity/Booking';
 import type { CreateEditEvent } from '@/types/Event';
 import type LastInsetId from '@/types/LastInsertId';
 
+import * as fs from 'fs';
+
 export async function POST(req: Request) {
   try {
     if (!db.isInitialized) {
@@ -17,16 +19,6 @@ export async function POST(req: Request) {
     await queryRunner.startTransaction();
     try {
       const pictureIdList = [];
-      for (const base64 of body.picture) {
-        await queryRunner.manager.insert(Picture, {
-          picture: base64.split(',')[1],
-          createdAt: new Date(),
-        });
-        const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-          `SELECT LAST_INSERT_ID() AS lastInsertId;`
-        );
-        pictureIdList.push(Number(lastInsertId.lastInsertId));
-      }
       const eventData: Event = {
         event_name: body.event_name,
         event_datetime: body.event_datetime,
@@ -44,6 +36,32 @@ export async function POST(req: Request) {
         updatedAt: new Date(),
       };
       await queryRunner.manager.insert(Event, eventData);
+      const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
+        `SELECT LAST_INSERT_ID() AS lastInsertId;`
+      );
+      
+      let index = 1;
+      const fileNameList: string[] = [];
+      for (const base64 of body.picture) {
+        const base64String = base64.split(',')[1];
+        const buffer = Buffer.from(base64String, 'base64');
+        const fileName = `eventPicture${lastInsertId.lastInsertId}_${index}.png`;
+        const filePath = `public/event/${fileName}`;
+        fs.writeFileSync(filePath, buffer);
+        // fs.writeFile(filePath, buffer, (err) => {
+        //   if (err) {
+        //     console.error('Error writing file:', err);
+        //   } else {
+        //     console.log('File written successfully:', filePath);
+        //   }
+        // });
+        fileNameList.push(fileName);
+        index++;
+      }
+
+      await queryRunner.manager.update(Event, lastInsertId.lastInsertId, {
+        picture_id: fileNameList,
+      });
       await queryRunner.commitTransaction();
     } catch (error) {
       console.error(error);

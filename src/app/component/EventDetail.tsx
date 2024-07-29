@@ -31,13 +31,13 @@ export default function EventDetailParent(
       const response = await axios.get(`/api/event/${event_id}`);
       setEvents(response.data);
       const data = response.data as Event;
-      if (data.picture_id.length) {
-        const pictureList = [];
-        for (const picture_id of data.picture_id) {
-          pictureList.push(await fetchPicture(picture_id));
-        }
-        setPictureUrl([...pictureList]);
-      }
+      // if (data.picture_id.length) {
+      //   const pictureList = [];
+      //   for (const picture_id of data.picture_id) {
+      //     pictureList.push(await fetchPicture(picture_id));
+      //   }
+      //   setPictureUrl([...pictureList]);
+      // }
     } catch (err) {
       console.error('Error fetching event:', err);
     }
@@ -191,21 +191,22 @@ function EventDetail(props: Readonly<ComponentProps>) {
           <strong>Maximum number of Attendees:</strong>{' '}
           {props.event.max_attendees} people
         </Card.Text>
-        {/* <Carousel>
+        <Carousel>
           {props.event.picture_id.map((pictureId, index) => {
             console.log(props.pictureUrl);
 
             return (
               <Carousel.Item key={index}>
-                <img
-                  src={`/api/picture/14`}
+                <Image
+                  src={`/api/picture/${pictureId}`}
+                  alt='missing'
                   width={100}
                   height={100}
-                ></img>
+                ></Image>
               </Carousel.Item>
             );
           })}
-        </Carousel> */}
+        </Carousel>
         <Card.Text style={{ marginBottom: '1rem' }}>
           Contact USCAAT admin for more information
         </Card.Text>
