@@ -20,7 +20,7 @@ export class Event {
 	@Column({
 		type: 'date',
 	})
-	register_before!: Date;
+	register_before!: Date | string;
 
 	@Column({
 		type: 'text',

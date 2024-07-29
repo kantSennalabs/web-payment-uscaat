@@ -37,12 +37,14 @@ export async function DELETE(req: Request, context: { params: Params }) {
           event_id,
         },
       });
+      await queryRunner.manager.delete(Event, event_id);
+      if (eventItem.picture_id.length) {
+        await queryRunner.manager.delete(Picture, eventItem.picture_id);
+      }
       if (userList.length) {
         const allUserList = userList.map((item) => item.user_id).flat();
-        await queryRunner.manager.delete(Event, event_id);
         await queryRunner.manager.delete(Booking, event_id);
         await queryRunner.manager.delete(User, allUserList);
-        await queryRunner.manager.delete(Picture, eventItem.picture_id);
       }
       await queryRunner.commitTransaction();
     } catch (error) {
