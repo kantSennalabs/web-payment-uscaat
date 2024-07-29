@@ -8,16 +8,20 @@ import Image from 'next/image';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-function ESlipView() {
+interface ComponentProps {
+  eventName: string;
+  amount: number;
+  totalPeople: number;
+  handleBack(): void;
+  handleSubmit(slipPic: File): void;
+}
+
+function ESlipView(props: Readonly<ComponentProps>) {
   const router = useRouter();
   const [showCopied, setShowCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
-
-  const handleBack = () => {
-    router.back();
-  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText('012-3-45678-9').then(() => {
@@ -44,7 +48,9 @@ function ESlipView() {
 
   const handleModalClose = () => {
     setUploadSuccess(false);
-    router.push('/');
+    if (selectedFile) {
+      props.handleSubmit(selectedFile);
+    }
   };
 
   return (
@@ -81,12 +87,12 @@ function ESlipView() {
               outline: 'none',
               boxShadow: 'none',
             }}
-            onClick={handleBack}
+            onClick={props.handleBack}
             onMouseDown={(e) => e.preventDefault()}
           >
             &lt;
           </Button>
-          <strong>BarBQ Party</strong>
+          <strong>{props.eventName}</strong>
           <div style={{ width: '40px' }}></div>
         </Card.Header>
         <Card.Body>
@@ -135,8 +141,11 @@ function ESlipView() {
         </Card.Body>
       </Card>
       <div style={{ width: '22rem' }}>
-        <p className="text-start">Total People: 3</p>
-        <p className="text-start">Total Amount Due: 1,500 Baht</p>
+        <p className="text-start">Total People: {props.totalPeople}</p>
+        <p className="text-start">
+          Total Amount Due:{' '}
+          {(props.amount * props.totalPeople).toLocaleString()} Baht
+        </p>
       </div>
       <Button
         variant="outline-secondary"

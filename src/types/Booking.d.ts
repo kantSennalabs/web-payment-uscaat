@@ -14,5 +14,5 @@ interface User {
 
 interface Payment {
 	amount: number;
-	payment_image: string;
+	payment_image?: string;
 }

@@ -82,6 +82,9 @@ function EventDetail(props: Readonly<ComponentProps>) {
   const handleAttendance = () => {
     router.push(`/admin/event/${props.event.event_id}/attendees`);
   };
+  const handleReserve = () => {
+    router.push(`/event/${props.event.event_id}/reserve`);
+  };
 
   const FooterButton = () => {
     if (props.isAdmin) {
@@ -102,7 +105,7 @@ function EventDetail(props: Readonly<ComponentProps>) {
       return (
         <div className="d-flex justify-content-center">
           <Button
-            onClick={handleAttendance}
+            onClick={handleReserve}
             style={{ backgroundColor: '#d0021b', borderColor: '#d0021b' }}
           >
             Reserve
