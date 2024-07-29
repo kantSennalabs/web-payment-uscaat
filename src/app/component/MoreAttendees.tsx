@@ -39,16 +39,14 @@ function MoreAttendees(props: Readonly<ComponentProps>) {
 
   return (
     <>
-      <Card.Text
-        style={{ marginBottom: '1rem', color: 'red', fontWeight: 'bold' }}
-      >
+      <Card.Text style={{ marginBottom: '1rem', fontWeight: 'bold' }}>
         {props.user.user_name}
         {`(${props.user.user_nickname})`}
       </Card.Text>
       <Card.Text style={{ marginBottom: '1rem' }}>{phoneFormat}</Card.Text>
       <Card.Text style={{ marginBottom: '1rem' }}>{facultyName}</Card.Text>
       <Card.Text style={{ marginBottom: '1rem' }}>
-        Graduation Year {props.user.user_gradyear}
+        Graduation Year: {props.user.user_gradyear}
       </Card.Text>
     </>
   );

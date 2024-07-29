@@ -53,7 +53,7 @@ export default function MoreAttendeesPage({
         <Card.Header
           className="d-flex justify-content-between align-items-center"
           style={{
-            backgroundColor: '#d0021b',
+            backgroundColor: '#A21D22',
             color: 'white',
             borderTopLeftRadius: '15px',
             borderTopRightRadius: '15px',

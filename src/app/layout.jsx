@@ -59,12 +59,12 @@ export default function RootLayout({ children }) {
                   width: '40px',
                   height: '40px',
                   backgroundColor: 'white',
-                  color: '#d0021b',
+                  color: '#A21D22',
                   fontSize: '20px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: '1px solid #d0021b',
+                  border: '1px solid #A21D22',
                   marginRight: '15px',
                 }}
               >

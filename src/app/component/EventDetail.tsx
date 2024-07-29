@@ -95,7 +95,7 @@ function EventDetail(props: Readonly<ComponentProps>) {
           </Button>
           <Button
             onClick={handleAttendance}
-            style={{ backgroundColor: '#d0021b', borderColor: '#d0021b' }}
+            style={{ backgroundColor: '#A21D22', borderColor: '#A21D22' }}
           >
             Attendance
           </Button>
@@ -106,7 +106,7 @@ function EventDetail(props: Readonly<ComponentProps>) {
         <div className="d-flex justify-content-center">
           <Button
             onClick={handleReserve}
-            style={{ backgroundColor: '#d0021b', borderColor: '#d0021b' }}
+            style={{ backgroundColor: '#A21D22', borderColor: '#A21D22' }}
           >
             Reserve
           </Button>
