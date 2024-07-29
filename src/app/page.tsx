@@ -6,6 +6,10 @@ import { useState, useEffect } from 'react';
 import EventCard from '@/app/component/EventCard';
 import type { Event } from '@/app/db/entity/Event';
 
+interface EventWithCountAttendees extends Event {
+  totalAttendees?: number;
+}
+
 function Home() {
   const router = useRouter();
 
@@ -13,7 +17,7 @@ function Home() {
     router.push(`/event/${event_id}`);
   };
 
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventWithCountAttendees[]>([]);
 
   const fetchEvents = async () => {
     try {
@@ -45,6 +49,8 @@ function Home() {
             event_name={event.event_name}
             register_before={event.register_before}
             event_datetime={event.event_datetime}
+            totalAttendees={event.totalAttendees!}
+            max_attendees={event.max_attendees}
             handleViewDetail={handleViewDetail}
           />
         ))}

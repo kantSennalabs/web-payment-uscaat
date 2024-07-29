@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import db from '@/app/db';
 import { Event } from '@/app/db/entity/Event';
 import { Picture } from '@/app/db/entity/Picture';
+import { Booking } from '@/app/db/entity/Booking';
 import type { CreateEditEvent } from '@/types/Event';
 import type LastInsetId from '@/types/LastInsertId';
 
@@ -60,14 +61,39 @@ export async function POST(req: Request) {
   }
 }
 
+interface EventWithCountAttendees extends Event {
+  totalAttendees?: number;
+}
+
 export async function GET() {
   try {
     if (!db.isInitialized) {
       await db.initialize();
     }
     const eventRepository = db.getRepository(Event);
-    const eventList: Event[] = await eventRepository.find();
-    console.log(eventList);
+    const bookingRepository = db.getRepository(Booking);
+    const eventList: EventWithCountAttendees[] = await eventRepository.find();
+
+    for (const event of eventList) {
+      const bookingList: Booking[] = await bookingRepository.find({
+        select: {
+          user_id: true,
+        },
+        where: {
+          event_id: event.event_id,
+        },
+      });
+      if (bookingList.length) {
+        event.totalAttendees = bookingList.reduce(
+          (accumulator, currentValue) =>
+            accumulator + currentValue.user_id.length,
+          0
+        );
+      } else {
+        event.totalAttendees = 0;
+      }
+    }
+
     return NextResponse.json(eventList);
   } catch (error) {
     console.error(error);

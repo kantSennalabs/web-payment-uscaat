@@ -8,9 +8,10 @@ import { format, isAfter } from 'date-fns';
 interface Props {
   event_id: number;
   event_name: string;
-  register_before: Date;
+  register_before: Date | string;
   event_datetime: Date;
-
+  max_attendees: number;
+  totalAttendees: number;
   handleViewDetail(event_id: number): void;
 }
 
@@ -42,7 +43,7 @@ export default function EventCard(props: Readonly<Props>) {
             }}
             // onClick={() => props.handleBooking(props.event_id)}
           >
-            10/100 booking
+            {props.totalAttendees}/{props.max_attendees} booking
           </Card.Text>
         </div>
         <div className="text-end">
