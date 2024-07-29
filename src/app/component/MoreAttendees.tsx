@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 
@@ -18,15 +19,23 @@ function MoreAttendees(props: Readonly<ComponentProps>) {
     6
   )}`;
 
-  const getFacultyName = async (facultyId: number) => {
+  const [facultyName, setFacultyName] = useState('');
+
+  const getFacultyName = async () => {
     try {
-      const response = await axios.get(`/api/faculty/${facultyId}`);
+      const response = await axios.get(
+        `/api/faculty/${props.user.user_faculty}`
+      );
       const responseData = response.data as Faculty;
-      return responseData.faculty_name;
+      setFacultyName(responseData.faculty_name);
     } catch (error) {
       console.error();
     }
   };
+
+  useEffect(() => {
+    getFacultyName();
+  }, [props.user.user_faculty]);
 
   return (
     <>
@@ -37,9 +46,7 @@ function MoreAttendees(props: Readonly<ComponentProps>) {
         {`(${props.user.user_nickname})`}
       </Card.Text>
       <Card.Text style={{ marginBottom: '1rem' }}>{phoneFormat}</Card.Text>
-      <Card.Text style={{ marginBottom: '1rem' }}>
-        {getFacultyName(props.user.user_faculty)}
-      </Card.Text>
+      <Card.Text style={{ marginBottom: '1rem' }}>{facultyName}</Card.Text>
       <Card.Text style={{ marginBottom: '1rem' }}>
         Graduation Year {props.user.user_gradyear}
       </Card.Text>

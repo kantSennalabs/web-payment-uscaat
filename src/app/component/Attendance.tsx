@@ -43,8 +43,8 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
     router.push('/admin/home/detail/attendance/slip');
   };
 
-  const handlePlusClick = () => {
-    router.push('/admin/home/detail/attendance/plus');
+  const handlePlusClick = (bookingId: number) => {
+    router.push(`/admin/event/${props.event_id}/attendees/${bookingId}`);
   };
 
   const fetchBooking = async () => {
@@ -132,7 +132,9 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
                         {!!(bookingItem.user_id.length - 1) && (
                           <Button
                             variant="link"
-                            onClick={handlePlusClick}
+                            onClick={() =>
+                              handlePlusClick(bookingItem.booking_id!)
+                            }
                             style={{
                               color: 'blue',
                               padding: 0,
