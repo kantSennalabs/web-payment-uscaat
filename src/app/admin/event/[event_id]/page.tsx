@@ -2,10 +2,10 @@
 
 import EventDetailParent from '@/app/component/EventDetail';
 
-function EventDetailUser({
+function EventDetailAdmin({
   params,
 }: Readonly<{ params: { event_id: string } }>) {
-  return <EventDetailParent event_id={params.event_id} isAdmin={false} />;
+  return <EventDetailParent event_id={params.event_id} isAdmin={true} />;
 }
 
-export default EventDetailUser;
+export default EventDetailAdmin;

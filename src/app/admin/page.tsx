@@ -1,23 +1,29 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Button from 'react-bootstrap/Button';
+import { FaPlus } from 'react-icons/fa';
+import { adminInstance } from '@/app/util/axiosInstance';
 import EventCard from '@/app/component/EventCard';
+
 import type { Event } from '@/app/db/entity/Event';
 
 function Home() {
   const router = useRouter();
 
   const handleViewDetail = (event_id: number) => {
-    router.push(`/event/${event_id}`);
+    router.push(`/admin/event/${event_id}`);
   };
 
+  const handleAddEvent = () => {
+    router.push('/admin/event');
+  };
   const [events, setEvents] = useState<Event[]>([]);
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('/api/event');
+      const response = await adminInstance.get('/api/event');
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -34,7 +40,7 @@ function Home() {
       style={{
         backgroundColor: '#f8f9fa',
         paddingTop: '2rem',
-        paddingBottom: '3rem',
+        marginBottom: '3rem',
       }}
     >
       <div className="w-100 px-3">
