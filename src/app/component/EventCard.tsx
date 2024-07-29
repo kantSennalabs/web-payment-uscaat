@@ -10,6 +10,7 @@ interface Props {
   event_name: string;
   register_before: Date;
   event_datetime: Date;
+
   handleViewDetail(event_id: number): void;
 }
 
@@ -26,11 +27,28 @@ export default function EventCard(props: Readonly<Props>) {
         <div>
           <Card.Title>{props.event_name}</Card.Title>
           <Card.Text className="text-muted">
-            {format(props.register_before, 'dd MMM yyyy')}
+            Register before {format(props.register_before, 'dd MMM yyyy')}
+          </Card.Text>
+          <Card.Text
+            className=""
+            style={{
+              color: 'red',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+            }}
+            // onClick={() => props.handleBooking(props.event_id)}
+          >
+            10/100 booking
           </Card.Text>
         </div>
         <div className="text-end">
-          <Card.Text className="text-muted mb-2">
+          <Card.Text
+            className="text-muted mb-2"
+            style={{
+              fontWeight: 'bold',
+            }}
+          >
             {format(props.event_datetime, 'dd MMM yyyy')}
           </Card.Text>
           <Button
