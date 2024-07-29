@@ -3,7 +3,7 @@ import db from '@/app/db';
 import { Payment } from '@/app/db/entity/Payment';
 
 type Body = {
-	payment_id: string;
+	payment_id: number;
 };
 
 export async function PUT(req: Request) {

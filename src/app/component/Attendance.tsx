@@ -61,6 +61,17 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
     }
   };
 
+  const handleConfirmPayment = async (bookingId: number) => {
+    try {
+      await axios.put('/api/payment', {
+        payment_id: bookingId,
+      });
+      fetchBooking();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchBooking();
   }, [props.event_id]);
@@ -159,6 +170,9 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
                                 padding: 0,
                                 textDecoration: 'none',
                               }}
+                              onClick={() =>
+                                handleConfirmPayment(bookingItem.booking_id!)
+                              }
                             >
                               Confirm
                             </Button>
