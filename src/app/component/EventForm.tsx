@@ -82,8 +82,9 @@ export default function EventForm(props: Readonly<ComponentProps>) {
     const parseEventDatetime = parseISO(
       `${props.formValues.date}T${props.formValues.time}:00`
     );
-    const parseRegisterBefore = parseISO(
-      `${props.formValues.registerBefore}T00:00:00`
+    const parseRegisterBefore = props.formValues.registerBefore.replaceAll(
+      '/',
+      '-'
     );
 
     const formData: CreateEditEvent = {

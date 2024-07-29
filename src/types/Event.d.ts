@@ -1,7 +1,7 @@
 export interface CreateEditEvent {
   event_name: string;
   event_datetime: Date;
-  register_before: Date;
+  register_before: Date | string;
   event_description: string;
   event_address: string;
   event_location: string;
