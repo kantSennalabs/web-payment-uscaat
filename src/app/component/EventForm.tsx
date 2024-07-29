@@ -130,12 +130,13 @@ export default function EventForm(props: Readonly<ComponentProps>) {
     >
       <Card style={{ width: '22rem', borderRadius: '15px' }}>
         <Card.Header
-          className="d-flex justify-content-between align-items-center"
           style={{
             backgroundColor: '#AB1818',
             color: 'white',
             borderTopLeftRadius: '15px',
             borderTopRightRadius: '15px',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
           }}
         >
           <Button
@@ -155,8 +156,10 @@ export default function EventForm(props: Readonly<ComponentProps>) {
           >
             &lt;
           </Button>
-          <strong>{props.isEdit ? 'Edit' : 'Create'} Event</strong>
-          {props.isEdit && (
+          <div className='d-flex align-items-center justify-center'>
+            <strong>{props.isEdit ? 'Edit' : 'Create'} Event</strong>
+          </div>
+          {props.isEdit ? (
             <Dropdown>
               <Dropdown.Toggle
                 variant="link"
@@ -178,6 +181,8 @@ export default function EventForm(props: Readonly<ComponentProps>) {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
+          ) : (
+            <div></div>
           )}
         </Card.Header>
         <Card.Body>
