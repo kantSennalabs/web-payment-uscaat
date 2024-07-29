@@ -18,6 +18,7 @@ interface ComponentProps {
   setFormValues: Dispatch<SetStateAction<FormValuesEvent>>;
   isEdit: boolean;
   handleBack(): void;
+  handleDelete(): void;
   submitEvent(event: CreateEditEvent): void;
 }
 
@@ -158,9 +159,7 @@ export default function EventForm(props: Readonly<ComponentProps>) {
                 }}
               ></Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item
-                // onClick={() => props.deleteEvent(props.formValues.event_id)}
-                >
+                <Dropdown.Item onClick={props.handleDelete}>
                   Delete Event
                 </Dropdown.Item>
               </Dropdown.Menu>

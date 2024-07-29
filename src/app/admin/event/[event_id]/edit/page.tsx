@@ -69,15 +69,24 @@ function EditEvent({ params }: Readonly<{ params: { event_id: string } }>) {
     router.back();
   };
 
+  const handleDelete = async () => {
+    try {
+      await adminInstance.delete(`/api/event/${event_id}`);
+      router.push('/admin');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleEditEvent = async (event: CreateEditEvent) => {
     try {
-        const response = await adminInstance.put(`/api/event/${event_id}`, event);
-        if (response.status === 200) {
-          router.back();
-        }
-      } catch (error) {
-        console.error(error);
+      const response = await adminInstance.put(`/api/event/${event_id}`, event);
+      if (response.status === 200) {
+        router.back();
       }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -89,6 +98,7 @@ function EditEvent({ params }: Readonly<{ params: { event_id: string } }>) {
           setFormValues={setFormValues}
           isEdit={true}
           handleBack={handleBack}
+          handleDelete={handleDelete}
           submitEvent={handleEditEvent}
         />
       ) : (
