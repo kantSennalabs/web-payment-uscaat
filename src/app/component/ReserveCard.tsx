@@ -9,6 +9,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 import type { Dispatch, SetStateAction } from 'react';
 import type { UserValue } from '@/types/Reserve';
+import type { Faculty } from '../db/entity/Faculty';
 
 interface ComponentProps {
   eventName: string;
@@ -16,6 +17,7 @@ interface ComponentProps {
   setUserValue: Dispatch<SetStateAction<UserValue[]>>;
   userIndex: number;
   userCount: number;
+  facultyList: Faculty[];
   handleAddPerson?(): void;
   handleConfirm?(): void;
 }
@@ -37,7 +39,7 @@ export default function ReserveCard(props: Readonly<ComponentProps>) {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { id, value } = e.target;
     props.setUserValue((prevValue) => {
@@ -132,12 +134,17 @@ export default function ReserveCard(props: Readonly<ComponentProps>) {
 
             <Form.Group className="mb-3" controlId="faculty">
               <Form.Label>Faculty</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your school"
+              <Form.Select
                 value={props.userValue.faculty}
                 onChange={handleInputChange}
-              />
+              >
+                <option>Choose Faculty</option>
+                {props.facultyList.map((item) => (
+                  <option value={item.faculty_id} key={item.faculty_id}>
+                    {item.faculty_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="year">

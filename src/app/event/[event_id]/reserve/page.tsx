@@ -9,12 +9,14 @@ import { getBase64FromFile } from '@/app/util/base64';
 
 import type { UserValue } from '@/types/Reserve';
 import type { Event } from '@/app/db/entity/Event';
+import type { Faculty } from '@/app/db/entity/Faculty';
 import type { CreateBooking } from '@/types/Booking';
 
 const ReservePage = ({ params }: { params: { event_id: string } }) => {
   const router = useRouter();
   const event_id: number = Number(params.event_id);
 
+  const [faculty, setFaculty] = useState<Faculty[]>([]);
   const [event, setEvent] = useState<Event>();
   const [isPaymentPage, setIsPaymentPage] = useState(false);
   const [totalPersons, setTotalPersons] = useState(0);
@@ -27,6 +29,15 @@ const ReservePage = ({ params }: { params: { event_id: string } }) => {
       year: '',
     },
   ]);
+
+  const fetchFaculty = async () => {
+    try {
+      const response = await axios.get('/api/faculty');
+      setFaculty(response.data as Faculty[]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchEventData = async () => {
     try {
@@ -90,6 +101,7 @@ const ReservePage = ({ params }: { params: { event_id: string } }) => {
   }, [persons]);
 
   useEffect(() => {
+    fetchFaculty();
     fetchEventData();
   }, []);
 
@@ -108,6 +120,7 @@ const ReservePage = ({ params }: { params: { event_id: string } }) => {
               setUserValue={setPersons}
               userIndex={index}
               userCount={totalPersons}
+              facultyList={faculty}
               handleAddPerson={
                 persons.length === index + 1 ? handleAddPerson : () => {}
               }
