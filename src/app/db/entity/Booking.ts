@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
+@Entity('bookings')
 export class Booking {
   @PrimaryGeneratedColumn({
     unsigned: true,

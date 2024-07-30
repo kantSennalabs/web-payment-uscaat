@@ -94,7 +94,7 @@ export async function PUT(req: Request, context: { params: Params }) {
           createdAt: new Date(),
         });
         const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-          `SELECT max(picture_id) from picture;`
+          `SELECT max(picture_id) from pictures;`
         );
         console.log('lastInsertId:', lastInsertId);
         pictureIdList.push(String(lastInsertId.max));

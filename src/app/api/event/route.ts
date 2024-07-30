@@ -10,6 +10,7 @@ import * as fs from 'fs';
 
 export async function POST(req: Request) {
   try {
+    console.log(db.isInitialized);
     if (!db.isInitialized) {
       await db.initialize();
     }
@@ -37,30 +38,25 @@ export async function POST(req: Request) {
       };
       await queryRunner.manager.insert(Event, eventData);
       const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-        `SELECT max(event_id) from event;`
+        `SELECT max(event_id) from events;`
       );
 
-      let index = 1;
       const fileNameList: string[] = [];
+
       for (const base64 of body.picture) {
-        const base64String = base64.split(',')[1];
-        const buffer = Buffer.from(base64String, 'base64');
-        const fileName = `eventPicture${lastInsertId.max}_${index}.png`;
-        const filePath = `public/event/${fileName}`;
-        fs.writeFileSync(filePath, buffer);
-        // fs.writeFile(filePath, buffer, (err) => {
-        //   if (err) {
-        //     console.error('Error writing file:', err);
-        //   } else {
-        //     console.log('File written successfully:', filePath);
-        //   }
-        // });
-        fileNameList.push(fileName);
-        index++;
+        await queryRunner.manager.insert(Picture, {
+          picture: base64,
+          createdAt: new Date(),
+        });
+        const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
+          `SELECT max(picture_id) from pictures;`
+        );
+        console.log('lastInsertId:', lastInsertId);
+        pictureIdList.push(String(lastInsertId.max));
       }
       if (fileNameList.length) {
         await queryRunner.manager.update(Event, lastInsertId.max, {
-          picture_id: fileNameList,
+          picture_id: pictureIdList,
         });
       }
       await queryRunner.commitTransaction();
@@ -118,6 +114,6 @@ export async function GET() {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    await db.destroy();
+    // await db.destroy();
   }
 }

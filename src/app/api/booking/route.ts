@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         };
         await queryRunner.manager.insert(User, insertData);
         const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-          `SELECT max(user_id) from user;`
+          `SELECT max(user_id) from users;`
         );
         userIdList.push(Number(lastInsertId.max));
       }
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         updatedAt: new Date(),
       });
       const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-        `SELECT max(booking_id) from booking;`
+        `SELECT max(booking_id) + 1 from bookings;`
       );
       await queryRunner.manager.insert(Payment, {
         event_id: body.event_id,

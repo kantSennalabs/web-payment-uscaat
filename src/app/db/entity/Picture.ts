@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
+@Entity('pictures')
 export class Picture {
   @PrimaryGeneratedColumn({
     unsigned: true,
