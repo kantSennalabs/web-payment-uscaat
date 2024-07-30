@@ -37,9 +37,8 @@ export async function POST(req: Request) {
         updatedAt: new Date(),
       };
       await queryRunner.manager.insert(Event, eventData);
-      const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-        `SELECT max(event_id) from events;`
-      );
+      const [lastInsertIdEvent]: LastInsetId[] =
+        await queryRunner.manager.query(`SELECT max(event_id) from events;`);
 
       const fileNameList: string[] = [];
 
@@ -54,8 +53,9 @@ export async function POST(req: Request) {
         console.log('lastInsertId:', lastInsertId);
         pictureIdList.push(String(lastInsertId.max));
       }
-      if (fileNameList.length) {
-        await queryRunner.manager.update(Event, lastInsertId.max, {
+      console.log('pictureIdList', pictureIdList);
+      if (pictureIdList.length) {
+        await queryRunner.manager.update(Event, lastInsertIdEvent.max, {
           picture_id: pictureIdList,
         });
       }
