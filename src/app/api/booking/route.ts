@@ -13,62 +13,60 @@ import type LastInsetId from '@/types/LastInsertId';
 		payment: Payment
   }
 */
-export async function POST(req: NextResponse) {
-	try {
-		if (!db.isInitialized) {
-			await db.initialize();
-		}
-		const body: CreateBooking = await req.json();
-		const queryRunner = db.createQueryRunner();
-		await queryRunner.connect();
-		await queryRunner.startTransaction();
-		try {
-			const userIdList: number[] = [];
-			for (const item of body.users) {
-				const insertData: User = {
-					...item,
-					createdAt: new Date(),
-					updatedAt: new Date(),
-				};
-				await queryRunner.manager.insert(User, insertData);
-				const [lastInsertId]: LastInsetId[] =
-					await queryRunner.manager.query(
-						`SELECT LAST_INSERT_ID() AS lastInsertId;`
-					);
-				userIdList.push(Number(lastInsertId.lastInsertId));
-			}
-			await queryRunner.manager.insert(Booking, {
-				event_id: body.event_id,
-				user_id: userIdList,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			});
-			const [lastInsertId]: LastInsetId[] =
-				await queryRunner.manager.query(
-					`SELECT LAST_INSERT_ID() AS lastInsertId;`
-				);
-			await queryRunner.manager.insert(Payment, {
-				event_id: body.event_id,
-				booking_id: Number(lastInsertId.lastInsertId),
-				amount: body.payment.amount,
-				payment_date: new Date(),
-				status: 0,
-				payment_image: body.payment.payment_image,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			});
-			await queryRunner.commitTransaction();
-		} catch (error) {
-			await queryRunner.rollbackTransaction();
-			throw error;
-		} finally {
-			await queryRunner.release();
-		}
-		return NextResponse.json('Create Booking Successful', { status: 201 });
-	} catch (error) {
-		console.error(error);
-		return NextResponse.json('Database Error', { status: 507 });
-	} finally {
-		await db.destroy();
-	}
+export async function POST(req: Request) {
+  try {
+    if (!db.isInitialized) {
+      await db.initialize();
+    }
+    const body: CreateBooking = await req.json();
+    const queryRunner = db.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const userIdList: number[] = [];
+      for (const item of body.users) {
+        const insertData: User = {
+          ...item,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+        await queryRunner.manager.insert(User, insertData);
+        const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
+          `SELECT max(user_id) from user;`
+        );
+        userIdList.push(Number(lastInsertId.max));
+      }
+      await queryRunner.manager.insert(Booking, {
+        event_id: body.event_id,
+        user_id: userIdList,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
+        `SELECT max(booking_id) from booking;`
+      );
+      await queryRunner.manager.insert(Payment, {
+        event_id: body.event_id,
+        booking_id: Number(lastInsertId.max),
+        amount: body.payment.amount,
+        payment_date: new Date(),
+        status: false,
+        payment_image: body.payment.payment_image,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+    return NextResponse.json('Create Booking Successful', { status: 201 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json('Database Error', { status: 507 });
+  } finally {
+    await db.destroy();
+  }
 }

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { staticGenerationAsyncStorage } from "next/dist/client/components/static-generation-async-storage.external";
+import { staticGenerationAsyncStorage } from 'next/dist/client/components/static-generation-async-storage.external';
 
-export default function AdminLayout({ children }) {
+interface AdminLayoutProps {
+  children: ReactNode;
+}
+
+export default function AdminLayout({ children }: AdminLayoutProps) {
   const cookieStore = cookies();
   const token = cookieStore.get('token');
   const store = staticGenerationAsyncStorage.getStore();
@@ -17,7 +21,7 @@ export default function AdminLayout({ children }) {
     return <div style={{ flex: 1 }}>{children}</div>;
   } else {
     if (!path.includes('/login')) {
-      redirect('/admin/login', 'replace');
+      redirect('/admin/login');
     } else {
       return <div style={{ flex: 1 }}>{children}</div>;
     }

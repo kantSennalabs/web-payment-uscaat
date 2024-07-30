@@ -156,7 +156,7 @@ export default function EventForm(props: Readonly<ComponentProps>) {
           >
             &lt;
           </Button>
-          <div className='d-flex align-items-center justify-center'>
+          <div className="d-flex align-items-center justify-center">
             <strong>{props.isEdit ? 'Edit' : 'Create'} Event</strong>
           </div>
           {props.isEdit ? (

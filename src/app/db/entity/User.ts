@@ -3,9 +3,9 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn({
-		unsigned: true,
-	})
-	user_id?: number;
+    unsigned: true,
+  })
+  user_id?: number;
 
   @Column({
     length: 255,
@@ -23,7 +23,7 @@ export class User {
   user_phone!: string;
 
   @Column({
-    type: 'tinyint',
+    type: 'boolean',
     unsigned: true,
   })
   user_faculty!: number;
@@ -34,13 +34,9 @@ export class User {
   })
   user_gradyear!: number;
 
-  @Column({
-		type: 'datetime',
-	})
-	createdAt?: Date;
+  @Column({ type: 'timestamp' })
+  createdAt?: Date;
 
-	@Column({
-		type: 'datetime',
-	})
-	updatedAt!: Date;
+  @Column({ type: 'timestamp' })
+  updatedAt!: Date;
 }

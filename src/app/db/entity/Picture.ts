@@ -2,18 +2,14 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Picture {
-	@PrimaryGeneratedColumn({
-		unsigned: true,
-	})
-	picture_id?: number;
+  @PrimaryGeneratedColumn({
+    unsigned: true,
+  })
+  picture_id?: number;
 
-	@Column({
-		type: 'mediumblob',
-	})
-	picture!: string | ArrayBuffer;
+  @Column()
+  picture!: string;
 
-	@Column({
-		type: 'datetime',
-	})
-	createdAt?: Date;
+  @Column({ type: 'timestamp' })
+  createdAt?: Date;
 }

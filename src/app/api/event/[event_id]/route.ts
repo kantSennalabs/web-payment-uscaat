@@ -90,15 +90,16 @@ export async function PUT(req: Request, context: { params: Params }) {
       const pictureIdList = [];
       for (const base64 of body.picture) {
         await queryRunner.manager.insert(Picture, {
-          picture: base64.split(',')[1],
+          picture: base64,
           createdAt: new Date(),
         });
         const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-          `SELECT LAST_INSERT_ID() AS lastInsertId;`
+          `SELECT max(picture_id) from picture;`
         );
-        pictureIdList.push(Number(lastInsertId.lastInsertId));
+        console.log('lastInsertId:', lastInsertId);
+        pictureIdList.push(String(lastInsertId.max));
       }
-
+      console.log('pictureIdList:', pictureIdList);
       const updateEvent: Event = {
         event_name: body.event_name,
         event_datetime: body.event_datetime,

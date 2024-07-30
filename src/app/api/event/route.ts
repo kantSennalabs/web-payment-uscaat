@@ -37,15 +37,15 @@ export async function POST(req: Request) {
       };
       await queryRunner.manager.insert(Event, eventData);
       const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-        `SELECT LAST_INSERT_ID() AS lastInsertId;`
+        `SELECT max(event_id) from event;`
       );
-      
+
       let index = 1;
       const fileNameList: string[] = [];
       for (const base64 of body.picture) {
         const base64String = base64.split(',')[1];
         const buffer = Buffer.from(base64String, 'base64');
-        const fileName = `eventPicture${lastInsertId.lastInsertId}_${index}.png`;
+        const fileName = `eventPicture${lastInsertId.max}_${index}.png`;
         const filePath = `public/event/${fileName}`;
         fs.writeFileSync(filePath, buffer);
         // fs.writeFile(filePath, buffer, (err) => {
@@ -58,10 +58,11 @@ export async function POST(req: Request) {
         fileNameList.push(fileName);
         index++;
       }
-
-      await queryRunner.manager.update(Event, lastInsertId.lastInsertId, {
-        picture_id: fileNameList,
-      });
+      if (fileNameList.length) {
+        await queryRunner.manager.update(Event, lastInsertId.max, {
+          picture_id: fileNameList,
+        });
+      }
       await queryRunner.commitTransaction();
     } catch (error) {
       console.error(error);

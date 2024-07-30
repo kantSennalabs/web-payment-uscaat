@@ -2,20 +2,14 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Payment {
-  @PrimaryGeneratedColumn({
-    unsigned: true,
-  })
+  @PrimaryGeneratedColumn()
   payment_id?: number;
 
-  @Column({
-    unsigned: true,
-  })
-  event_id!: number;
+  @Column()
+  event_id?: number;
 
-  @Column({
-    unsigned: true,
-  })
-  booking_id!: number;
+  @Column()
+  booking_id?: number;
 
   @Column({
     type: 'decimal',
@@ -23,32 +17,31 @@ export class Payment {
     precision: 10,
     scale: 2,
   })
-  amount!: number;
+  amount?: number;
 
   @Column({
-    type: 'datetime',
+    type: 'date',
   })
-  payment_date!: Date;
+  payment_date?: Date;
 
   @Column({
-    type: 'tinyint',
+    type: 'boolean',
     unsigned: true,
   })
-  status!: number;
+  status?: boolean;
 
   @Column({
-    type: 'mediumblob',
     nullable: true,
   })
   payment_image?: string;
 
   @Column({
-    type: 'datetime',
+    type: 'date',
   })
-  createdAt!: Date;
+  createdAt?: Date;
 
   @Column({
-    type: 'datetime',
+    type: 'date',
   })
-  updatedAt!: Date;
+  updatedAt?: Date;
 }
