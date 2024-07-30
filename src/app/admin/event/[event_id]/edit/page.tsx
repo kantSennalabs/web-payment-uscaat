@@ -29,12 +29,33 @@ function EditEvent({ params }: Readonly<{ params: { event_id: string } }>) {
   const [formValues, setFormValues] =
     useState<FormValuesEvent>(defaultFormValues);
   const [loaded, setLoaded] = useState(false);
+
+  const fetchPicture = async (picture_id: number) => {
+    try {
+      const response = await adminInstance.get(`/api/picture/${picture_id}`);
+      return response.data;
+    } catch (err) {
+      console.error('Error fetching picture:', err);
+    }
+  };
+
   //format send date
   // 2024-07-31T21:00
   const fetchEvent = async () => {
     try {
       const response = await adminInstance.get(`/api/event/${event_id}`);
-      const eventData = response.data;
+      const eventData = response.data as Event;
+      if (eventData.picture_id.length) {
+        const pictureList = [];
+        for (const picture_id of eventData.picture_id) {
+          pictureList.push(await fetchPicture(+picture_id));
+        }
+        eventData.picture_id.splice(
+          0,
+          eventData.picture_id.length,
+          ...pictureList
+        );
+      }
       setEvents(eventData);
     } catch (err) {
       console.error('Error fetching event:', err);
@@ -58,7 +79,7 @@ function EditEvent({ params }: Readonly<{ params: { event_id: string } }>) {
         feeRequire: events.fee_required,
         feeAmount: String(events.fee_amount),
         maximum: String(events.max_attendees),
-        pictureUrl: [],
+        pictureUrl: events.picture_id,
       });
       setDefaultFormValues(formValues);
       setLoaded(true);
