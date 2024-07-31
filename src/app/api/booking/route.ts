@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         updatedAt: new Date(),
       });
       const [lastInsertId]: LastInsetId[] = await queryRunner.manager.query(
-        `SELECT max(booking_id) + 1 from bookings;`
+        `SELECT max(booking_id) from bookings;`
       );
       await queryRunner.manager.insert(Payment, {
         event_id: body.event_id,
