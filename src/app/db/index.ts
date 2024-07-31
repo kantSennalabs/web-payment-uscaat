@@ -14,8 +14,8 @@ const db = new DataSource({
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
-  synchronize: false,
-  logging: false,
+  synchronize: true,
+  logging: true,
   entities: [Admin, Event, Booking, Faculty, User, Payment, Picture],
 });
 
@@ -32,7 +32,7 @@ export async function checkConnection() {
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   } finally {
-    await db.destroy();
+    // await db.destroy();
   }
 }
 

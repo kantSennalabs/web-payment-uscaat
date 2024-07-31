@@ -29,7 +29,7 @@ export async function GET(req: Request, context: { params: Params }) {
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
     if (db.isInitialized) {
-      await db.destroy();
+      // await db.destroy();
     }
   }
 }

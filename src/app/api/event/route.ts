@@ -9,8 +9,6 @@ import { Booking } from '@/app/db/entity/Booking';
 import type { CreateEditEvent } from '@/types/Event';
 import type LastInsetId from '@/types/LastInsertId';
 
-import * as fs from 'fs';
-
 export async function POST(req: Request) {
   try {
     console.log(db.isInitialized);
@@ -75,7 +73,7 @@ export async function POST(req: Request) {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    await db.destroy();
+    // await db.destroy();
   }
 }
 
@@ -132,6 +130,6 @@ export async function GET() {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    // await db.destroy();
+    // // await db.destroy();
   }
 }

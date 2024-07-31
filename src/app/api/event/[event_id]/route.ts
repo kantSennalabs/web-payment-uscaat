@@ -58,7 +58,7 @@ export async function DELETE(req: Request, context: { params: Params }) {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    await db.destroy();
+    // // await db.destroy();
   }
 }
 
@@ -129,7 +129,7 @@ export async function PUT(req: Request, context: { params: Params }) {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    await db.destroy();
+    // // await db.destroy();
   }
 }
 
@@ -150,6 +150,6 @@ export async function GET(req: Request, context: { params: Params }) {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    await db.destroy();
+    // // await db.destroy();
   }
 }

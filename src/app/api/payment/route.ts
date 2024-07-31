@@ -21,6 +21,6 @@ export async function PUT(req: Request) {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    await db.destroy();
+    // await db.destroy();
   }
 }

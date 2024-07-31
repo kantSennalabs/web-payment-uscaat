@@ -67,6 +67,6 @@ export async function POST(req: Request) {
     console.error(error);
     return NextResponse.json('Database Error', { status: 507 });
   } finally {
-    await db.destroy();
+    // await db.destroy();
   }
 }
