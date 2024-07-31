@@ -210,7 +210,7 @@ function EventDetail(props: Readonly<ComponentProps>) {
           })}
         </Carousel>
         <Card.Text style={{ marginBottom: '1rem' }}>
-          Contact USCAAT admin for more information
+          Contact USCAAT admin: 0614595956 for more information
         </Card.Text>
         <FooterButton />
       </Card.Body>
