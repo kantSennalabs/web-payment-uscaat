@@ -14,6 +14,14 @@ export default function RootLayout({ children }) {
     router.push('/admin/event');
   };
 
+  const goToHome = () => {
+    if (pathname.startsWith('/admin') && !pathname.endsWith('/login')) {
+      router.push('/admin');
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
     <html lang="en">
       <body style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
@@ -35,7 +43,9 @@ export default function RootLayout({ children }) {
               color: 'white',
               fontWeight: 'bold',
               fontSize: '22.5px',
+              cursor: 'pointer',
             }}
+            onClick={() => goToHome()}
           >
             <img
               src="/USC_logo.png"

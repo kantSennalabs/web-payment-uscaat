@@ -160,7 +160,7 @@ export default function EventForm(props: Readonly<ComponentProps>) {
             <strong>{props.isEdit ? 'Edit' : 'Create'} Event</strong>
           </div>
           {props.isEdit ? (
-            <Dropdown>
+            <Dropdown className="d-flex align-items-center justify-end">
               <Dropdown.Toggle
                 variant="link"
                 style={{

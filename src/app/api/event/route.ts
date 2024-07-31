@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { MoreThanOrEqual } from 'typeorm';
+import jwt from 'jsonwebtoken';
 import db from '@/app/db';
 import { Event } from '@/app/db/entity/Event';
 import { Picture } from '@/app/db/entity/Picture';
@@ -85,9 +88,24 @@ export async function GET() {
     if (!db.isInitialized) {
       await db.initialize();
     }
+    const cookieStore = cookies();
+    const token = cookieStore.get('token');
+    let isValidToken = false;
+    if (token) {
+      isValidToken = !!jwt.verify(token.value, process.env.SECRET_KEY!);
+    }
+
     const eventRepository = db.getRepository(Event);
     const bookingRepository = db.getRepository(Booking);
-    const eventList: EventWithCountAttendees[] = await eventRepository.find();
+    const eventList: EventWithCountAttendees[] = await eventRepository.find(
+      isValidToken
+        ? {}
+        : {
+            where: {
+              register_before: MoreThanOrEqual(new Date()),
+            },
+          }
+    );
 
     for (const event of eventList) {
       const bookingList: Booking[] = await bookingRepository.find({
