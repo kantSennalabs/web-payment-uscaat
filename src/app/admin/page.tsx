@@ -57,6 +57,7 @@ function Home() {
             event_datetime={event.event_datetime}
             totalAttendees={event.totalAttendees!}
             max_attendees={event.max_attendees}
+            isAdmin={true}
             handleViewDetail={handleViewDetail}
           />
         ))}

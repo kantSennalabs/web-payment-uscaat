@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { format, isAfter } from 'date-fns';
@@ -12,11 +13,21 @@ interface Props {
   event_datetime: Date;
   max_attendees: number;
   totalAttendees: number;
+  isAdmin: boolean;
   handleViewDetail(event_id: number): void;
 }
 
 export default function EventCard(props: Readonly<Props>) {
+  const router = useRouter();
   const isEventPast = isAfter(new Date(), props.event_datetime);
+
+  const goToAttendeesPage = () => {
+    if (props.isAdmin) {
+      router.push(`/admin/event/${props.event_id}/attendees`);
+    } else {
+      router.push(`/event/${props.event_id}/attendees`);
+    }
+  };
 
   return (
     <Card
@@ -41,7 +52,7 @@ export default function EventCard(props: Readonly<Props>) {
               fontSize: '1rem',
               fontWeight: 'bold',
             }}
-            // onClick={() => props.handleBooking(props.event_id)}
+            onClick={() => goToAttendeesPage()}
           >
             {props.totalAttendees}/{props.max_attendees} booking
           </Card.Text>

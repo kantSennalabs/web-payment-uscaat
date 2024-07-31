@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
 import db from '@/app/db';
 import { Booking } from '@/app/db/entity/Booking';
 import { Payment } from '@/app/db/entity/Payment';
@@ -24,6 +26,13 @@ export async function GET(req: Request, context: { params: Params }) {
     if (!db.isInitialized) {
       await db.initialize();
     }
+    const cookieStore = cookies();
+    const token = cookieStore.get('token');
+    let isValidToken = false;
+    if (token) {
+      isValidToken = !!jwt.verify(token.value, process.env.SECRET_KEY!);
+    }
+
     const event_id = Number(context.params.event_id);
     const bookingRepository = db.getRepository(Booking);
     const paymentRepository = db.getRepository(Payment);
@@ -51,21 +60,23 @@ export async function GET(req: Request, context: { params: Params }) {
       event_id,
     });
     for (const bookingItem of bookingList) {
-      const paymentItem: Payment | null = await paymentRepository.findOne({
-        select: {
-          payment_id: true,
-          event_id: true,
-          booking_id: true,
-          amount: true,
-          payment_date: true,
-          status: true,
-          createdAt: true,
-          updatedAt: true,
-        },
-        where: { booking_id: bookingItem.booking_id },
-      });
-      if (paymentItem) {
-        bookingItem.payment = paymentItem;
+      if (isValidToken) {
+        const paymentItem: Payment | null = await paymentRepository.findOne({
+          select: {
+            payment_id: true,
+            event_id: true,
+            booking_id: true,
+            amount: true,
+            payment_date: true,
+            status: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+          where: { booking_id: bookingItem.booking_id },
+        });
+        if (paymentItem) {
+          bookingItem.payment = paymentItem;
+        }
       }
 
       const userItem: User | null = await userRepository.findOne({

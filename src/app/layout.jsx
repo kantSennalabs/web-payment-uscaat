@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './globals.css';
 import { useRouter, usePathname } from 'next/navigation';
 import Button from 'react-bootstrap/Button';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaSignOutAlt } from 'react-icons/fa';
+import axios from 'axios';
 
 export default function RootLayout({ children }) {
   const router = useRouter();
@@ -12,6 +13,11 @@ export default function RootLayout({ children }) {
 
   const handleAddEvent = () => {
     router.push('/admin/event');
+  };
+
+  const handleLogout = async () => {
+    await axios.post('/api/admin/logout');
+    router.push('/');
   };
 
   const goToHome = () => {
@@ -33,7 +39,34 @@ export default function RootLayout({ children }) {
             gridTemplateColumns: '1fr 1fr 1fr',
           }}
         >
-          <div></div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'start',
+            }}
+          >
+            {pathname === '/admin' && (
+              <Button
+                onClick={handleAddEvent}
+                style={{
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  backgroundColor: 'white',
+                  color: '#A21D22',
+                  fontSize: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '1px solid #A21D22',
+                  marginLeft: '15px',
+                }}
+              >
+                <FaPlus />
+              </Button>
+            )}
+          </div>
           <div
             style={{
               backgroundColor: '#A21D22',
@@ -63,7 +96,7 @@ export default function RootLayout({ children }) {
           >
             {pathname === '/admin' && (
               <Button
-                onClick={handleAddEvent}
+                onClick={handleLogout}
                 style={{
                   borderRadius: '50%',
                   width: '40px',
@@ -78,7 +111,7 @@ export default function RootLayout({ children }) {
                   marginRight: '15px',
                 }}
               >
-                <FaPlus />
+                <FaSignOutAlt />
               </Button>
             )}
           </div>
