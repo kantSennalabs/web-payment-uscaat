@@ -22,11 +22,8 @@ export class User {
   })
   user_phone!: string;
 
-  @Column({
-    type: 'boolean',
-    unsigned: true,
-  })
-  user_faculty!: number;
+  @Column({ nullable: true })
+  user_faculty!: string;
 
   @Column({
     type: 'smallint',
