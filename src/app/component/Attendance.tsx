@@ -51,7 +51,7 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
 
   const handleSlipClick = async (payment_id: number) => {
     const response = await axios.get(`/api/picture/slip/${payment_id}`);
-    setCurrentShowSlip(response.data);
+    setCurrentShowSlip(response.data.payment_image);
     handleShow();
   };
 
@@ -224,7 +224,14 @@ function AttendanceComponent(props: Readonly<ComponentProps>) {
               <Modal.Title>Slip</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Image src={currentShowSlip} alt="picture" fill={true} />
+              <Image
+                src={currentShowSlip}
+                alt="picture"
+                width={0}
+                height={0}
+                className="w-auto h-[300px] mx-auto"
+                sizes="100vw"
+              />
             </Modal.Body>
           </Modal>
         </>
