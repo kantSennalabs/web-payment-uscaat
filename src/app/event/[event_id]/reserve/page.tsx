@@ -25,7 +25,7 @@ const ReservePage = ({ params }: { params: { event_id: string } }) => {
       name: '',
       nickname: '',
       tel: '',
-      faculty: 0,
+      faculty: '',
       year: '',
     },
   ]);
@@ -55,7 +55,7 @@ const ReservePage = ({ params }: { params: { event_id: string } }) => {
         name: '',
         nickname: '',
         tel: '',
-        faculty: 0,
+        faculty: '',
         year: '',
       },
     ]);

@@ -2,6 +2,6 @@ export interface UserValue {
   name: string;
   nickname: string;
   tel: string;
-  faculty: number;
+  faculty: string;
   year: string;
 }
